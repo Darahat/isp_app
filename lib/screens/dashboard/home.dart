@@ -45,20 +45,22 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         bottomOpacity: 0.0,
-        title: Center(
-            child: Text(widget.title,
-                textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.black87))),
+        title: Text(widget.title,
+            textAlign: TextAlign.center,
+            style: const TextStyle(color: Colors.black87)),
         iconTheme: IconThemeData(color: Colors.black),
       ),
       body: FutureBuilder<Customer>(
         future: futureCustomer,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            DateTime myvalue = snapshot.data!.expiration;
-            // ignore: avoid_print
-            String formattedDate = DateFormat('dd-MM-yyyy').format(myvalue);
+            DateTime expiration = snapshot.data!.expiration;
+            DateTime createdon = snapshot.data!.createdon;
 
+            // ignore: avoid_print
+            String expirationdate = DateFormat('dd-MM-yyyy').format(expiration);
+            String createdondate = DateFormat('dd-MM-yyyy').format(createdon);
+            const double gap = 10;
             return Container(
                 padding: EdgeInsets.all(30),
                 child: ListView(
@@ -97,7 +99,7 @@ class _HomeState extends State<Home> {
                                     children: [
                                       Padding(
                                           padding: const EdgeInsets.all(10.0),
-                                          child: Text('Exp: $formattedDate',
+                                          child: Text('Exp: $expirationdate',
                                               style: const TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontFamily: 'Roboto',
@@ -137,7 +139,7 @@ class _HomeState extends State<Home> {
                                             color: Colors.grey),
                                       ),
                                       Text(
-                                        'Mac:',
+                                        'Mac Address:',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 13,
@@ -179,38 +181,193 @@ class _HomeState extends State<Home> {
                             ],
                           ),
                         )),
-                    Card(
-                        child: Container(
-                      padding: EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Table(
-                            children: [
-                              TableRow(children: [
-                                TableCell(
-                                    child: Text(
-                                        'Package : ${snapshot.data!.srvname}')),
-                                TableCell(
-                                  child: Text(
-                                      'Price : ${snapshot.data!.unitprice}'),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Card(
+                          child: Padding(
+                            padding: EdgeInsets.all(20),
+                            child: Column(
+                              children: [
+                                const Text(
+                                  'Mac Address:',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                      color: Colors.green),
                                 ),
-                              ]),
-                              TableRow(
-                                children: [
-                                  TableCell(
-                                    child:
-                                        Text('Bill Due Date:: $formattedDate'),
-                                  ),
-                                  TableCell(
-                                    child: Text(''),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                const SizedBox(height: 10.0),
+                                Text(
+                                  snapshot.data!.mac,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                      color: Colors.grey),
+                                )
+                              ],
+                            ),
                           ),
-                        ],
+                        ),
+                        Card(
+                          child: Padding(
+                            padding: EdgeInsets.all(20),
+                            child: Column(
+                              children: [
+                                const Text(
+                                  'Account Created:',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                      color: Colors.green),
+                                ),
+                                const SizedBox(height: 10.0),
+                                Text(createdondate,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                        color: Colors.grey))
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    Card(
+                      child: Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Column(
+                          children: const [
+                            Text(
+                              'Personal Details',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  color: Colors.green),
+                            ),
+                          ],
+                        ),
                       ),
-                    )),
+                    ),
+                    Card(
+                      child: Container(
+                          alignment: Alignment.centerLeft,
+                          color: Colors.blueGrey,
+                          child: Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text('Name:',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 13,
+                                            color: Colors.white)),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                        '${snapshot.data!.firstname} ${snapshot.data!.lastname}',
+                                        textAlign: TextAlign.left,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                            color: Colors.white)),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    const Text('Username:',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 13,
+                                            color: Colors.white)),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(snapshot.data!.username,
+                                        textAlign: TextAlign.left,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                            color: Colors.white)),
+                                    const Text('Contact:',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 13,
+                                            color: Colors.white)),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(snapshot.data!.mobile,
+                                        textAlign: TextAlign.left,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                            color: Colors.white)),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    const Text('Email:',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 13,
+                                            color: Colors.white)),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(snapshot.data!.email,
+                                        textAlign: TextAlign.left,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                            color: Colors.white)),
+                                  ],
+                                ),
+
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [],
+                                )
+//  Text('Mobile:${snapshot.data!.mobile}',
+//                                     style: const TextStyle(
+//                                         fontWeight: FontWeight.bold,
+//                                         fontSize: 15,
+//                                         color: Colors.grey)),
+//                                 Text('Address:${snapshot.data!.address}',
+//                                     style: const TextStyle(
+//                                         fontWeight: FontWeight.bold,
+//                                         fontSize: 15,
+//                                         color: Colors.grey)),
+                                // Text('City:${snapshot.data!.city}',
+                                //     style: const TextStyle(
+                                //         fontWeight: FontWeight.bold,
+                                //         fontSize: 15,
+                                //         color: Colors.grey)),
+                                // Text('ZIP Code:${snapshot.data!.zip}',
+                                //     style: const TextStyle(
+                                //         fontWeight: FontWeight.bold,
+                                //         fontSize: 15,
+                                //         color: Colors.grey)),
+                                // Text('Country:${snapshot.data!.country}',
+                                //     style: const TextStyle(
+                                //         fontWeight: FontWeight.bold,
+                                //         fontSize: 15,
+                                //         color: Colors.grey)),
+                                // Text('Address:${snapshot.data!.address}',
+                                //     style: const TextStyle(
+                                //         fontWeight: FontWeight.bold,
+                                //         fontSize: 15,
+                                //         color: Colors.grey)),
+                              ],
+                            ),
+                          )),
+                    )
                   ],
                 ));
 

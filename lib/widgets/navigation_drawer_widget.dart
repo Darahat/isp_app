@@ -31,7 +31,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                 // ignore: dead_code
                 return UserAccountsDrawerHeader(
                   accountName: Text(
-                      '${snapshot.data!.firstname} ${snapshot.data!.firstname}'),
+                      '${snapshot.data!.firstname} ${snapshot.data!.lastname}'),
                   accountEmail: Text(snapshot.data!.email),
                   currentAccountPicture: CircleAvatar(
                     child: ClipOval(
