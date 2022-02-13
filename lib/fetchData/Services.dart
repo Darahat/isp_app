@@ -1,20 +1,61 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:dio/dio.dart';
+
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'package:isp/models/user_model.dart';
 
-class Services {
-  static const String url = 'http://api.aniknetwork.net/user/ictsohel';
+import 'package:isp/models/traffic_report_model.dart';
 
+class Services {
+  static const String userurl = 'http://api.aniknetwork.net/user/ictsohel';
+  static const String trafficReporturl =
+      'http://api.aniknetwork.net/traffic_report/ictsohel';
+  static const String LiveTrafficurl =
+      'http://api.aniknetwork.net/traffic_report/ictsohel';
+  FormData formData = FormData.fromMap({"user": "ictsohel"});
   static Future<Customer> fetchCustomer() async {
     try {
-      final response = await http.get(Uri.parse(url));
+      final response = await http.get(Uri.parse(userurl));
       if (response.statusCode == 200) {
         final Customer customers = customerFromJson(response.body);
         return customers;
       } else {
-        throw Exception('Failed to load album');
+        throw Exception('Failed to load user');
       }
     } catch (e) {
-      throw Exception('Failed to load album from try');
+      throw Exception('Failed to load user from try');
+    }
+  }
+
+  static Future<List<TrafficReport>> fetchTrafficReport() async {
+    try {
+      var response = await get(Uri.parse(trafficReporturl));
+
+      if (response.statusCode == 200) {
+        List jsonResponse = jsonDecode(response.body);
+        return jsonResponse.map((job) => TrafficReport.fromJson(job)).toList();
+      } else {
+        throw Exception('Failed to load Traffic Report ');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  static fetchTrafficLiveReport() async {
+    Dio dio = Dio();
+    var formData = FormData.fromMap({
+      'user': 'ictsohel',
+    });
+    try {
+      var response = await dio.post(LiveTrafficurl, data: formData);
+      print(response);
+      return response.data;
+      // Do whatever
+    } on DioError catch (e) {
+      print('.............................................................$e');
     }
   }
 }

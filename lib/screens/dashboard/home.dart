@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_const
+
 import 'package:flutter/material.dart';
 import 'package:isp/widgets/navigation_drawer_widget.dart';
 import 'package:isp/models/user_model.dart';
@@ -60,6 +62,7 @@ class _HomeState extends State<Home> {
             // ignore: avoid_print
             String expirationdate = DateFormat('dd-MM-yyyy').format(expiration);
             String createdondate = DateFormat('dd-MM-yyyy').format(createdon);
+            bool _customTileExpanded = false;
             const double gap = 10;
             return Container(
                 padding: EdgeInsets.all(30),
@@ -210,11 +213,11 @@ class _HomeState extends State<Home> {
                         ),
                         Card(
                           child: Padding(
-                            padding: EdgeInsets.all(20),
+                            padding: const EdgeInsets.all(20),
                             child: Column(
                               children: [
                                 const Text(
-                                  'Account Created:',
+                                  'Acc. Created:',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15,
@@ -238,11 +241,11 @@ class _HomeState extends State<Home> {
                         child: Column(
                           children: const [
                             Text(
-                              'Personal Details',
+                              'My Details',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15,
-                                  color: Colors.green),
+                                  color: Colors.blue),
                             ),
                           ],
                         ),
@@ -251,139 +254,138 @@ class _HomeState extends State<Home> {
                     Card(
                       child: Container(
                           alignment: Alignment.centerLeft,
-                          color: Colors.blueGrey,
+                          color: Colors.white10,
                           child: Padding(
                             padding: EdgeInsets.all(10),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text('Name:',
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 13,
-                                            color: Colors.white)),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                        '${snapshot.data!.firstname} ${snapshot.data!.lastname}',
-                                        textAlign: TextAlign.left,
+                                Expanded(
+                                  flex: 1,
+                                  child: ExpansionTile(
+                                    title: const Text('Personal Info',
                                         style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15,
-                                            color: Colors.white)),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    const Text('Username:',
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 13,
-                                            color: Colors.white)),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(snapshot.data!.username,
-                                        textAlign: TextAlign.left,
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15,
-                                            color: Colors.white)),
-                                    const Text('Contact:',
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 13,
-                                            color: Colors.white)),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(snapshot.data!.mobile,
-                                        textAlign: TextAlign.left,
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15,
-                                            color: Colors.white)),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    const Text('Email:',
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 13,
-                                            color: Colors.white)),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(snapshot.data!.email,
-                                        textAlign: TextAlign.left,
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15,
-                                            color: Colors.white)),
-                                  ],
+                                            color: Colors.blue)),
+                                    children: <Widget>[
+                                      ListTile(
+                                        title: const Text('Name'),
+                                        subtitle: Text(
+                                            '${snapshot.data!.firstname} ${snapshot.data!.lastname}',
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15,
+                                                color: Colors.grey)),
+                                      ),
+                                      ListTile(
+                                        title: const Text('Username'),
+                                        subtitle: Text(snapshot.data!.username,
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15,
+                                                color: Colors.grey)),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [],
-                                )
-//  Text('Mobile:${snapshot.data!.mobile}',
-//                                     style: const TextStyle(
-//                                         fontWeight: FontWeight.bold,
-//                                         fontSize: 15,
-//                                         color: Colors.grey)),
-//                                 Text('Address:${snapshot.data!.address}',
-//                                     style: const TextStyle(
-//                                         fontWeight: FontWeight.bold,
-//                                         fontSize: 15,
-//                                         color: Colors.grey)),
-                                // Text('City:${snapshot.data!.city}',
-                                //     style: const TextStyle(
-                                //         fontWeight: FontWeight.bold,
-                                //         fontSize: 15,
-                                //         color: Colors.grey)),
-                                // Text('ZIP Code:${snapshot.data!.zip}',
-                                //     style: const TextStyle(
-                                //         fontWeight: FontWeight.bold,
-                                //         fontSize: 15,
-                                //         color: Colors.grey)),
-                                // Text('Country:${snapshot.data!.country}',
-                                //     style: const TextStyle(
-                                //         fontWeight: FontWeight.bold,
-                                //         fontSize: 15,
-                                //         color: Colors.grey)),
-                                // Text('Address:${snapshot.data!.address}',
-                                //     style: const TextStyle(
-                                //         fontWeight: FontWeight.bold,
-                                //         fontSize: 15,
-                                //         color: Colors.grey)),
                               ],
                             ),
+                          )),
+                    ),
+                    Card(
+                      child: Container(
+                          alignment: Alignment.centerLeft,
+                          color: Colors.white,
+                          child: Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: ExpansionTile(
+                                      title: const Text('Contact Info',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15,
+                                              color: Colors.blue)),
+                                      children: <Widget>[
+                                        ListTile(
+                                          title: const Text('Email'),
+                                          subtitle: Text(snapshot.data!.email,
+                                              textAlign: TextAlign.left,
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                  color: Colors.grey)),
+                                        ),
+                                        ListTile(
+                                          title: const Text('Mobile'),
+                                          subtitle: Text(snapshot.data!.mobile,
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                  color: Colors.grey)),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ]),
+                          )),
+                    ),
+                    Card(
+                      child: Container(
+                          alignment: Alignment.centerLeft,
+                          color: Colors.white,
+                          child: Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: ExpansionTile(
+                                      title: const Text('Address',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15,
+                                              color: Colors.blue)),
+                                      children: <Widget>[
+                                        ListTile(
+                                          title: const Text('Area'),
+                                          subtitle: Text(snapshot.data!.address,
+                                              textAlign: TextAlign.left,
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                  color: Colors.grey)),
+                                        ),
+                                        ListTile(
+                                          title: const Text('City'),
+                                          subtitle: Text(snapshot.data!.city,
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                  color: Colors.grey)),
+                                        ),
+                                        ListTile(
+                                          title: const Text('Zip'),
+                                          subtitle: Text(snapshot.data!.zip,
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                  color: Colors.grey)),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ]),
                           )),
                     )
                   ],
                 ));
-
-            //  Card(
-            //   child: Column(
-            //     mainAxisSize: MainAxisSize.min,
-            //     children: <Widget>[
-            //       const ListTile(
-            //         leading: Icon(Icons.album, size: 45),
-            //         title: Text('Sonu Nigam'),
-            //         subtitle: Text('Best of Sonu Nigam Song'),
-            //       ),
-            //     ],
-            //   ),
-            // );
-            //
           } else {
             return const Center(
               child: CircularProgressIndicator(),
