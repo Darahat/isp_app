@@ -30,130 +30,126 @@ class _TrafficReportState extends State<TrafficReport> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        drawer: const NavigationDrawerWidget(),
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          bottomOpacity: 0.0,
-          title: Text(widget.title,
-              textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.black87)),
-          iconTheme: const IconThemeData(color: Colors.black),
+    return SafeArea(
+        child: Scaffold(
+            drawer: const NavigationDrawerWidget(),
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              bottomOpacity: 0.0,
+              title: Text(widget.title,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.black87)),
+              iconTheme: const IconThemeData(color: Colors.black),
 
-          // Here we take the value from the Home object that was created by
-          // the App.build method, and use it to set our appbar title.
-        ),
-        body: FutureBuilder(
-            future: Services.fetchTrafficReport(),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                List trafficReport = snapshot.data;
+              // Here we take the value from the Home object that was created by
+              // the App.build method, and use it to set our appbar title.
+            ),
+            body: FutureBuilder(
+                future: Services.fetchTrafficReport(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    List trafficReport = snapshot.data;
 
-                // usersFiltered = trafficReport;
-                return ListView(
-                  children: <Widget>[
-                    Card(
-                      child: ListTile(
-                        leading: const Icon(Icons.search),
-                        title: TextField(
-                            controller: controller,
-                            decoration: const InputDecoration(
-                                hintText: 'Search', border: InputBorder.none),
-                            onChanged: (value) {
-                              setState(() {
-                                _searchResult = value;
-                                usersFiltered = trafficReport
-                                    .where((traffic) =>
-                                        traffic.acctstarttime
-                                            .contains(_searchResult) ||
-                                        traffic.ip.contains(_searchResult))
-                                    .toList();
-                              });
-                            }),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.cancel),
-                          onPressed: () {
-                            setState(() {
-                              controller.clear();
-                              _searchResult = '';
-                              usersFiltered = trafficReport;
-                            });
-                          },
+                    // usersFiltered = trafficReport;
+                    return ListView(
+                      children: <Widget>[
+                        Card(
+                          child: ListTile(
+                            leading: const Icon(Icons.search),
+                            title: TextField(
+                                controller: controller,
+                                decoration: const InputDecoration(
+                                    hintText: 'Search',
+                                    border: InputBorder.none),
+                                onChanged: (value) {
+                                  setState(() {
+                                    _searchResult = value;
+                                    usersFiltered = trafficReport
+                                        .where((traffic) =>
+                                            traffic.acctstarttime
+                                                .contains(_searchResult) ||
+                                            traffic.ip.contains(_searchResult))
+                                        .toList();
+                                  });
+                                }),
+                            trailing: IconButton(
+                              icon: const Icon(Icons.cancel),
+                              onPressed: () {
+                                setState(() {
+                                  controller.clear();
+                                  _searchResult = '';
+                                  usersFiltered = trafficReport;
+                                });
+                              },
+                            ),
+                          ),
                         ),
+                        SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: DataTable(
+                                    columns: const <DataColumn>[
+                                      DataColumn(
+                                        label: Text(
+                                          'Date',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.blue),
+                                        ),
+                                      ),
+                                      DataColumn(
+                                        label: Text(
+                                          'Upload(Mbps)',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.blue),
+                                        ),
+                                      ),
+                                      DataColumn(
+                                        label: Text(
+                                          'Download(Mbps)',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.blue),
+                                        ),
+                                      ),
+                                      DataColumn(
+                                        label: Text(
+                                          'IP',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.blue),
+                                        ),
+                                      ),
+                                    ],
+                                    rows: List.generate(
+                                        usersFiltered.length,
+                                        (index) => DataRow(cells: [
+                                              DataCell(Text(
+                                                  '${usersFiltered[index].acctstarttime}')),
+                                              DataCell(Text(
+                                                  '${(usersFiltered[index].upload / 1000000).toStringAsFixed(3)}')),
+                                              DataCell(Text(
+                                                  '${(usersFiltered[index].download / 1000000).toStringAsFixed(3)}')),
+                                              DataCell(Text(
+                                                  '${usersFiltered[index].ip}')),
+                                            ])))))
+                      ],
+                    );
+                  } else {
+                    return const Center(
+                      child: Text(
+                        'Loading.....',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.grey),
                       ),
-                    ),
-                    SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: DataTable(
-                                columns: const <DataColumn>[
-                                  DataColumn(
-                                    label: Text(
-                                      'Date',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.blue),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    label: Text(
-                                      'Upload(Mbps)',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.blue),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    label: Text(
-                                      'Download(Mbps)',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.blue),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    label: Text(
-                                      'IP',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.blue),
-                                    ),
-                                  ),
-                                ],
-                                rows: List.generate(
-                                    usersFiltered.length,
-                                    (index) => DataRow(cells: [
-                                          DataCell(Text(
-                                              '${usersFiltered[index].acctstarttime}')),
-                                          DataCell(Text(
-                                              '${(usersFiltered[index].upload / 1000000).toStringAsFixed(3)}')),
-                                          DataCell(Text(
-                                              '${(usersFiltered[index].download / 1000000).toStringAsFixed(3)}')),
-                                          DataCell(Text(
-                                              '${usersFiltered[index].ip}')),
-                                        ])))))
-                  ],
-                );
-
-                // return ListView.builder(
-                //     itemCount: trafficReport.length,
-                //     itemBuilder: (context, index) => ListTile(
-                //           title: Text('${trafficReport[index].ip}'),
-                //         ));
-              } else {
-                return const Center(
-                  child: Text(
-                    'Loading.....',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.grey),
-                  ),
-                );
-              }
-            }));
+                    );
+                  }
+                })));
   }
 
   // Widget buildSearch() => SearchWidget(

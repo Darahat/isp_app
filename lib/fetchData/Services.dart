@@ -4,16 +4,20 @@ import 'package:dio/dio.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:isp/models/live_traffic_model.dart';
 import 'package:isp/models/user_model.dart';
 
 import 'package:isp/models/traffic_report_model.dart';
+import 'package:isp/models/invoice_list_model.dart';
 
 class Services {
   static const String userurl = 'http://api.aniknetwork.net/user/ictsohel';
   static const String trafficReporturl =
       'http://api.aniknetwork.net/traffic_report/ictsohel';
   static const String LiveTrafficurl =
-      'http://api.aniknetwork.net/traffic_report/ictsohel';
+      'https://api.aniknetwork.net/live_traffic/ictsohel';
+  static const String invoiceurl =
+      "https://api.aniknetwork.net/list_invoice/ictsohel";
   FormData formData = FormData.fromMap({"user": "ictsohel"});
   static Future<Customer> fetchCustomer() async {
     try {
@@ -44,18 +48,33 @@ class Services {
     }
   }
 
-  static fetchTrafficLiveReport() async {
-    Dio dio = Dio();
-    var formData = FormData.fromMap({
-      'user': 'ictsohel',
-    });
+  static Future<List<InvoiceList>> fetchInvoiceList() async {
     try {
-      var response = await dio.post(LiveTrafficurl, data: formData);
-      print(response);
-      return response.data;
-      // Do whatever
-    } on DioError catch (e) {
-      print('.............................................................$e');
+      var response = await get(Uri.parse(invoiceurl));
+
+      if (response.statusCode == 200) {
+        List jsonResponse = jsonDecode(response.body);
+        return jsonResponse.map((job) => InvoiceList.fromJson(job)).toList();
+      } else {
+        throw Exception('Failed to load Invoice List ');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  static Future<List<LiveTraffic>> fetchTrafficLiveReport() async {
+    try {
+      var response = await get(Uri.parse(LiveTrafficurl));
+
+      if (response.statusCode == 200) {
+        List jsonResponse = jsonDecode(response.body);
+        return jsonResponse.map((job) => LiveTraffic.fromJson(job)).toList();
+      } else {
+        throw Exception('Failed to load Invoice List ');
+      }
+    } catch (e) {
+      throw Exception(e);
     }
   }
 }
