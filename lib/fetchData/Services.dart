@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:crypto/crypto.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -19,12 +20,38 @@ class Services {
   static const String invoiceurl =
       "https://api.aniknetwork.net/list_invoice/ictsohel";
   FormData formData = FormData.fromMap({"user": "ictsohel"});
+
   static Future<Customer> fetchCustomer() async {
     try {
       final response = await http.get(Uri.parse(userurl));
       if (response.statusCode == 200) {
         final Customer customers = customerFromJson(response.body);
         return customers;
+      } else {
+        throw Exception('Failed to load user');
+      }
+    } catch (e) {
+      throw Exception('Failed to load user from try');
+    }
+  }
+
+  static Future<Customer> authUser(username, password) async {
+    String authurl = 'http://api.aniknetwork.net/user/$username';
+
+    try {
+      final response = await http.get(Uri.parse(authurl));
+
+      if (response.statusCode == 200) {
+        final Customer customers = customerFromJson(response.body);
+        var passutf = utf8.encode(password);
+        var digest2 = md5.convert(passutf).toString();
+        var apipass = customers.password.toString();
+
+        if (customers.username == username && apipass == digest2) {
+          return customers;
+        } else {
+          return throw Exception('Authentication Failed');
+        }
       } else {
         throw Exception('Failed to load user');
       }
