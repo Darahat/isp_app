@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:isp/fetchData/Services.dart';
+import 'package:isp/screens/dashboard/home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key, required this.title}) : super(key: key);
@@ -14,13 +18,36 @@ class _LoginPageState extends State<LoginPage> {
   var passwordCtrl = TextEditingController();
   // Toggles the password show status
   var username, password;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   Future<void> handleSubmit() async {
+    final prefs = await SharedPreferences.getInstance();
+
     if (formKey.currentState!.validate()) {
       // If the form is valid, display a Snackbar.
       formKey.currentState!.save();
       try {
         var req = await Services.authUser(username, password);
-        Navigator.pushNamed(context, '/');
+        final bool? isLoggedin = prefs.getBool('isLoggedin');
+        print(isLoggedin);
+        if (isLoggedin == true) {
+          // Navigator.of(context).pop();
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (_) => const Home(
+                    title: 'Dashboard',
+                  )));
+        } else {
+          // Navigator.of(context).pop();
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (_) => const LoginPage(
+                    title: 'Login',
+                  )));
+        }
       } on Exception catch (e) {
         print(e.toString());
       }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:isp/fetchData/Services.dart';
 import 'package:isp/models/user_model.dart';
+import 'package:isp/screens/dashboard/home.dart';
+import 'package:isp/screens/login/login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NavigationDrawerWidget extends StatefulWidget {
   const NavigationDrawerWidget({Key? key}) : super(key: key);
@@ -22,7 +25,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
   Widget build(BuildContext context) {
     return Drawer(
       child: Material(
-        color: Colors.orange,
+        color: const Color(0xffFFC09F),
         child: ListView(padding: EdgeInsets.zero, children: <Widget>[
           FutureBuilder<Customer>(
             future: futureCustomer,
@@ -31,23 +34,26 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                 // ignore: dead_code
                 return UserAccountsDrawerHeader(
                   accountName: Text(
-                      '${snapshot.data!.firstname} ${snapshot.data!.lastname}'),
-                  accountEmail: Text(snapshot.data!.email),
+                      '${snapshot.data!.firstname} ${snapshot.data!.lastname}',
+                      style: const TextStyle(color: Colors.black)),
+                  accountEmail: Text(
+                    snapshot.data!.email,
+                    style: const TextStyle(color: Colors.black),
+                  ),
                   currentAccountPicture: CircleAvatar(
                     child: ClipOval(
-                      child: Image.network(
-                        'https://oflutter.com/wp-content/uploads/2021/02/girl-profile.png',
+                      child: Image.asset(
+                        'assets/images/avatar.png',
                         fit: BoxFit.cover,
-                        width: 90,
-                        height: 90,
+                        width: 110,
+                        height: 110,
                       ),
                     ),
                   ),
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                         fit: BoxFit.fill,
-                        image: NetworkImage(
-                            'https://oflutter.com/wp-content/uploads/2021/02/profile-bg3.jpg')),
+                        image: AssetImage('assets/images/profilebg.png')),
                   ),
                 );
               } else {
@@ -56,19 +62,18 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                   accountEmail: const Text('Guest'),
                   currentAccountPicture: CircleAvatar(
                     child: ClipOval(
-                      child: Image.network(
-                        'https://oflutter.com/wp-content/uploads/2021/02/girl-profile.png',
+                      child: Image.asset(
+                        'assets/images/avatar.png',
                         fit: BoxFit.cover,
-                        width: 90,
-                        height: 90,
+                        width: 110,
+                        height: 110,
                       ),
                     ),
                   ),
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                         fit: BoxFit.fill,
-                        image: NetworkImage(
-                            'https://oflutter.com/wp-content/uploads/2021/02/profile-bg3.jpg')),
+                        image: AssetImage('assets/images/profilebg.png')),
                   ),
                 );
               }
@@ -138,6 +143,30 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             },
           ),
           const Divider(),
+          InkWell(
+            child: buildMenuItem(
+              text: 'Logout',
+              icon: Icons.headset_mic,
+            ),
+            onTap: () async {
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.setBool('isLoggedin', false);
+              final bool? isLoggedin = prefs.getBool('isLoggedin');
+              if (isLoggedin == true) {
+                Navigator.of(context).pop();
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (_) => const Home(
+                          title: 'Dashboard',
+                        )));
+              } else {
+                Navigator.of(context).pop();
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (_) => const LoginPage(
+                          title: 'Login',
+                        )));
+              }
+            },
+          ),
         ]),
       ),
     );

@@ -49,8 +49,12 @@ class _HomeState extends State<Home> {
         bottomOpacity: 0.0,
         title: Text(widget.title,
             textAlign: TextAlign.center,
-            style: const TextStyle(color: Colors.black87)),
-        iconTheme: IconThemeData(color: Colors.black),
+            style: const TextStyle(
+              color: Color(0xff2BC992),
+            )),
+        iconTheme: const IconThemeData(
+          color: Color(0xff2BC992),
+        ),
       ),
       body: FutureBuilder<Customer>(
         future: futureCustomer,
@@ -70,7 +74,7 @@ class _HomeState extends State<Home> {
                   children: <Widget>[
                     Card(
                         elevation: 10,
-                        color: Colors.orangeAccent,
+                        color: const Color(0xff79ADDC),
                         child: Container(
                           padding: const EdgeInsets.all(10.0),
                           child: Column(
@@ -115,11 +119,14 @@ class _HomeState extends State<Home> {
                                                 foregroundColor:
                                                     MaterialStateColor
                                                         .resolveWith((states) =>
-                                                            Colors.white),
+                                                            const Color(
+                                                                0xff79ADDC)),
                                                 backgroundColor:
                                                     MaterialStateColor
-                                                        .resolveWith((states) =>
-                                                            Colors.grey)),
+                                                        .resolveWith(
+                                                  (states) =>
+                                                      const Color(0xffFFEE93),
+                                                )),
                                             onPressed: () => {},
                                             child: const Text('Upgrade'),
                                           )),
@@ -137,16 +144,18 @@ class _HomeState extends State<Home> {
                                       Text(
                                         'Price',
                                         style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16,
-                                            color: Colors.grey),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                          color: const Color(0xffFFEE93),
+                                        ),
                                       ),
                                       Text(
                                         'Mac Address:',
                                         style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 13,
-                                            color: Colors.grey),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13,
+                                          color: const Color(0xffFFEE93),
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -156,7 +165,7 @@ class _HomeState extends State<Home> {
                                         children: [
                                           const Icon(
                                             Icons.price_change,
-                                            color: Colors.grey,
+                                            color: const Color(0xffFFEE93),
                                             size: 24.0,
                                             semanticLabel:
                                                 'Text to announce in accessibility modes',
@@ -166,16 +175,16 @@ class _HomeState extends State<Home> {
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16,
-                                                color: Colors.grey),
+                                                color: const Color(0xffFFEE93)),
                                           ),
                                         ],
                                       ),
                                       Text(
                                         snapshot.data!.mac,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 13,
-                                            color: Colors.grey),
+                                            color: Color(0xffFFEE93)),
                                       ),
                                     ],
                                   )
@@ -195,9 +204,10 @@ class _HomeState extends State<Home> {
                                 const Text(
                                   'Mac Address:',
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15,
-                                      color: Colors.green),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                    color: const Color(0xff2BC992),
+                                  ),
                                 ),
                                 const SizedBox(height: 10.0),
                                 Text(
@@ -219,9 +229,10 @@ class _HomeState extends State<Home> {
                                 const Text(
                                   'Acc. Created:',
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15,
-                                      color: Colors.green),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                    color: const Color(0xff2BC992),
+                                  ),
                                 ),
                                 const SizedBox(height: 10.0),
                                 Text(createdondate,
@@ -243,9 +254,10 @@ class _HomeState extends State<Home> {
                             Text(
                               'My Details',
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                  color: Colors.blue),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                                color: const Color(0xff79ADDC),
+                              ),
                             ),
                           ],
                         ),
@@ -264,12 +276,18 @@ class _HomeState extends State<Home> {
                                   child: ExpansionTile(
                                     title: const Text('Personal Info',
                                         style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15,
-                                            color: Colors.blue)),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                          color: const Color(0xff79ADDC),
+                                        )),
                                     children: <Widget>[
                                       ListTile(
-                                        title: const Text('Name'),
+                                        title: const Text(
+                                          'Name',
+                                          style: TextStyle(
+                                            color: const Color(0xff79ADDC),
+                                          ),
+                                        ),
                                         subtitle: Text(
                                             '${snapshot.data!.firstname} ${snapshot.data!.lastname}',
                                             style: const TextStyle(
@@ -278,7 +296,10 @@ class _HomeState extends State<Home> {
                                                 color: Colors.grey)),
                                       ),
                                       ListTile(
-                                        title: const Text('Username'),
+                                        title: const Text('Username',
+                                            style: TextStyle(
+                                              color: const Color(0xff79ADDC),
+                                            )),
                                         subtitle: Text(snapshot.data!.username,
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
@@ -307,12 +328,16 @@ class _HomeState extends State<Home> {
                                     child: ExpansionTile(
                                       title: const Text('Contact Info',
                                           style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 15,
-                                              color: Colors.blue)),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                            color: const Color(0xff79ADDC),
+                                          )),
                                       children: <Widget>[
                                         ListTile(
-                                          title: const Text('Email'),
+                                          title: const Text('Email',
+                                              style: TextStyle(
+                                                color: const Color(0xff79ADDC),
+                                              )),
                                           subtitle: Text(snapshot.data!.email,
                                               textAlign: TextAlign.left,
                                               style: const TextStyle(
@@ -321,7 +346,10 @@ class _HomeState extends State<Home> {
                                                   color: Colors.grey)),
                                         ),
                                         ListTile(
-                                          title: const Text('Mobile'),
+                                          title: const Text('Mobile',
+                                              style: TextStyle(
+                                                color: const Color(0xff79ADDC),
+                                              )),
                                           subtitle: Text(snapshot.data!.mobile,
                                               style: const TextStyle(
                                                   fontWeight: FontWeight.bold,
@@ -349,12 +377,16 @@ class _HomeState extends State<Home> {
                                     child: ExpansionTile(
                                       title: const Text('Address',
                                           style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 15,
-                                              color: Colors.blue)),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                            color: const Color(0xff79ADDC),
+                                          )),
                                       children: <Widget>[
                                         ListTile(
-                                          title: const Text('Area'),
+                                          title: const Text('Area',
+                                              style: TextStyle(
+                                                color: const Color(0xff79ADDC),
+                                              )),
                                           subtitle: Text(snapshot.data!.address,
                                               textAlign: TextAlign.left,
                                               style: const TextStyle(
@@ -363,7 +395,10 @@ class _HomeState extends State<Home> {
                                                   color: Colors.grey)),
                                         ),
                                         ListTile(
-                                          title: const Text('City'),
+                                          title: const Text('City',
+                                              style: TextStyle(
+                                                color: const Color(0xff79ADDC),
+                                              )),
                                           subtitle: Text(snapshot.data!.city,
                                               style: const TextStyle(
                                                   fontWeight: FontWeight.bold,
@@ -371,7 +406,10 @@ class _HomeState extends State<Home> {
                                                   color: Colors.grey)),
                                         ),
                                         ListTile(
-                                          title: const Text('Zip'),
+                                          title: const Text('Zip',
+                                              style: TextStyle(
+                                                color: const Color(0xff79ADDC),
+                                              )),
                                           subtitle: Text(snapshot.data!.zip,
                                               style: const TextStyle(
                                                   fontWeight: FontWeight.bold,

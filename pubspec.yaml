@@ -41,9 +41,8 @@ dependencies:
   dio: ^4.0.4
   syncfusion_flutter_charts: ^19.4.50
   crypto: ^3.0.1
+  flutter_bloc: ^8.0.1
   shared_preferences: ^2.0.13
-
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -69,7 +68,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/bg.png
-    # - images/a_dot_ham.jpeg
+    - assets/images/avatar.png
+    - assets/images/profilebg.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -6,12 +6,15 @@ import 'package:isp/screens/list_invoice/list_invoice.dart';
 import 'package:isp/screens/live_traffic/live_traffic.dart';
 import 'package:isp/screens/login/login.dart';
 import 'package:isp/screens/payment/payment.dart';
+import 'package:isp/screens/splash/splashscreen.dart';
 import 'package:isp/screens/traffic_report/traffic_report.dart';
 
 class RouterGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
+        return MaterialPageRoute(builder: (_) => SplashScreen());
+      case '/home':
         return MaterialPageRoute(
             builder: (_) => const Home(
                   title: 'Dashboard',

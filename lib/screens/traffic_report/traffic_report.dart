@@ -39,11 +39,12 @@ class _TrafficReportState extends State<TrafficReport> {
               bottomOpacity: 0.0,
               title: Text(widget.title,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.black87)),
-              iconTheme: const IconThemeData(color: Colors.black),
-
-              // Here we take the value from the Home object that was created by
-              // the App.build method, and use it to set our appbar title.
+                  style: const TextStyle(
+                    color: Color(0xff2BC992),
+                  )),
+              iconTheme: const IconThemeData(
+                color: Color(0xff2BC992),
+              ),
             ),
             body: FutureBuilder(
                 future: Services.fetchTrafficReport(),

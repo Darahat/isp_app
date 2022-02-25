@@ -19,11 +19,16 @@ class _LiveTrafficState extends State<LiveTraffic> {
 
   @override
   void initState() {
-    Services.fetchTrafficLiveReport().then((trafficReportFromServer) {
-      setState(() {
-        chartData = trafficReportFromServer;
+    try {
+      Services.fetchTrafficLiveReport().then((trafficReportFromServer) {
+        setState(() {
+          chartData = trafficReportFromServer;
+        });
       });
-    });
+    } catch (e) {
+      throw Exception("Failed to load user information");
+    }
+
     // Timer.periodic(const Duration(seconds:1),updateDataSource)
     super.initState();
   }
@@ -63,8 +68,12 @@ class _LiveTrafficState extends State<LiveTraffic> {
               bottomOpacity: 0.0,
               title: Text(widget.title,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.black87)),
-              iconTheme: IconThemeData(color: Colors.black),
+                  style: const TextStyle(
+                    color: Color(0xff2BC992),
+                  )),
+              iconTheme: const IconThemeData(
+                color: Color(0xff2BC992),
+              ),
             ),
             body: Center(
                 child: StreamBuilder(
@@ -90,10 +99,11 @@ class _LiveTrafficState extends State<LiveTraffic> {
 
                         return Card(
                             elevation: 10,
-                            color: Colors.blue,
+                            color: Color(0xff2BC992),
                             child: Container(
                               padding: const EdgeInsets.all(10.0),
                               child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Row(
                                     mainAxisAlignment:
