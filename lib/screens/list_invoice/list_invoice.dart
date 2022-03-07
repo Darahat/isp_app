@@ -97,7 +97,7 @@ class _ListInvoiceState extends State<ListInvoice> {
                                           'Date',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              color: Colors.blue),
+                                              color: Color(0xff79ADDC)),
                                         ),
                                       ),
                                       DataColumn(
@@ -105,7 +105,7 @@ class _ListInvoiceState extends State<ListInvoice> {
                                           'Invoice Number',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              color: Colors.blue),
+                                              color: Color(0xff79ADDC)),
                                         ),
                                       ),
                                       DataColumn(
@@ -113,7 +113,7 @@ class _ListInvoiceState extends State<ListInvoice> {
                                           'Package',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              color: Colors.blue),
+                                              color: Color(0xff79ADDC)),
                                         ),
                                       ),
                                       DataColumn(
@@ -121,7 +121,7 @@ class _ListInvoiceState extends State<ListInvoice> {
                                           'Created by',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              color: Colors.blue),
+                                              color: Color(0xff79ADDC)),
                                         ),
                                       ),
                                       DataColumn(
@@ -129,7 +129,7 @@ class _ListInvoiceState extends State<ListInvoice> {
                                           'Price(Tk)',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              color: Colors.blue),
+                                              color: Color(0xff79ADDC)),
                                         ),
                                       ),
                                       DataColumn(
@@ -137,7 +137,7 @@ class _ListInvoiceState extends State<ListInvoice> {
                                           'Expiration',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              color: Colors.blue),
+                                              color: Color(0xff79ADDC)),
                                         ),
                                       ),
                                       DataColumn(
@@ -145,7 +145,7 @@ class _ListInvoiceState extends State<ListInvoice> {
                                           'Action',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              color: Colors.blue),
+                                              color: Color(0xff79ADDC)),
                                         ),
                                       ),
                                     ],
@@ -173,7 +173,8 @@ class _ListInvoiceState extends State<ListInvoice> {
                                                         const ShapeDecoration(
                                                             shape:
                                                                 CircleBorder(), //here we set the circular figure
-                                                            color: Colors.blue),
+                                                            color: Color(
+                                                                0xff79ADDC)),
                                                     child: const Center(
                                                         child: Icon(
                                                       Icons.preview,

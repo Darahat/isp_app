@@ -97,7 +97,7 @@ class _TrafficReportState extends State<TrafficReport> {
                                           'Date',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              color: Colors.blue),
+                                              color: Color(0xff79ADDC)),
                                         ),
                                       ),
                                       DataColumn(
@@ -105,7 +105,7 @@ class _TrafficReportState extends State<TrafficReport> {
                                           'Upload(Mbps)',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              color: Colors.blue),
+                                              color: Color(0xff79ADDC)),
                                         ),
                                       ),
                                       DataColumn(
@@ -113,7 +113,7 @@ class _TrafficReportState extends State<TrafficReport> {
                                           'Download(Mbps)',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              color: Colors.blue),
+                                              color: Color(0xff79ADDC)),
                                         ),
                                       ),
                                       DataColumn(
@@ -121,7 +121,7 @@ class _TrafficReportState extends State<TrafficReport> {
                                           'IP',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              color: Colors.blue),
+                                              color: Color(0xff79ADDC)),
                                         ),
                                       ),
                                     ],

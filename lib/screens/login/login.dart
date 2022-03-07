@@ -24,7 +24,20 @@ class _LoginPageState extends State<LoginPage> {
     // TODO: implement initState
     super.initState();
   }
+void _showNewVersionAvailableDialog(error) {
+  final alert = AlertDialog(
+    title: Text("Authentication Failed"),
+    content: Text("Your username and password don't match.Please Try again $error"),
+    actions: [FlatButton(child: Text("OK"), onPressed: () => Navigator.pop(context, false),)],
+  );
 
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
   Future<void> handleSubmit() async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -32,22 +45,18 @@ class _LoginPageState extends State<LoginPage> {
       // If the form is valid, display a Snackbar.
       formKey.currentState!.save();
       try {
-        var req = await Services.authUser(username, password);
-        final bool? isLoggedin = prefs.getBool('isLoggedin');
-        print(isLoggedin);
-        if (isLoggedin == true) {
-          // Navigator.of(context).pop();
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
+        
+         Services.authUser(username, password).then((response) {
+ Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (_) => const Home(
                     title: 'Dashboard',
                   )));
-        } else {
-          // Navigator.of(context).pop();
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (_) => const LoginPage(
-                    title: 'Login',
-                  )));
-        }
+                          // final bool? isLoggedin = prefs.getBool('isLoggedin');
+
+    }).catchError((e) {
+      _showNewVersionAvailableDialog(e);
+    });
+
       } on Exception catch (e) {
         print(e.toString());
       }
@@ -56,17 +65,12 @@ class _LoginPageState extends State<LoginPage> {
       // print("password is : $password");
     }
   }
-
-// void PushError(){
-//     Navigator.push(context, MaterialPageRoute(
-//         builder: (context) => Error();
-//     ));
-// }
+  
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-            resizeToAvoidBottomInset: false,
+    return  Scaffold(
+
+            resizeToAvoidBottomInset: true,
             body: Center(
               child: Container(
                   padding: EdgeInsets.all(10.0),
@@ -79,16 +83,22 @@ class _LoginPageState extends State<LoginPage> {
                           style: TextStyle(fontSize: 25),
                         ),
                       ),
-                      Row(
-                        children: const [
-                          Image(
-                              fit: BoxFit.contain,
-                              height: 300.0,
-                              width: 300.0,
-                              image: AssetImage('assets/images/bg.png'))
-                        ],
+                      Expanded(
+                        flex: 5, // 60% of space => (6/(6 + 4))
+                        child: Row(
+                          children: const [
+                            Image(
+                                fit: BoxFit.contain,
+                                height: 300.0,
+                                width: 300.0,
+                                image: AssetImage('assets/images/bg.png'))
+                          ],
+                        ),
                       ),
-                      Form(
+                Expanded(
+                  flex: 6, // 60% of space => (6/(6 + 4))
+                  child:
+                  Form(
                         key: formKey,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -172,9 +182,9 @@ class _LoginPageState extends State<LoginPage> {
                                 )),
                           ],
                         ),
-                      )
+                      ))
                     ],
                   )),
-            )));
+            ));
   }
 }

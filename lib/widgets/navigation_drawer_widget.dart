@@ -83,7 +83,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             child: buildMenuItem(
                 text: 'Dashboard',
                 icon: Icons.dashboard,
-                onClicked: () => Navigator.pushNamed(context, '/')),
+                onClicked: () => Navigator.pushNamed(context, '/home')),
           ),
           const Divider(),
           InkWell(
@@ -146,7 +146,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
           InkWell(
             child: buildMenuItem(
               text: 'Logout',
-              icon: Icons.headset_mic,
+              icon: Icons.logout,
             ),
             onTap: () async {
               final prefs = await SharedPreferences.getInstance();

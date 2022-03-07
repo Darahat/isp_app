@@ -10,7 +10,7 @@ checkIfAuthenticated() async {
 
   await prefs.setBool('isLoggedin', false);
   final bool? isLoggedin = prefs.getBool('isLoggedin');
-  await Future.delayed(const Duration(seconds: 2));
+  await Future.delayed(const Duration(seconds: 5));
   if (isLoggedin == true) {
     print(isLoggedin);
     return true;

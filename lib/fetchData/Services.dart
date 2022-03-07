@@ -8,6 +8,7 @@ import 'package:isp/models/user_model.dart';
 import 'package:isp/models/traffic_report_model.dart';
 import 'package:isp/models/invoice_list_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/material.dart';
 
 class Services {
   FormData formData = FormData.fromMap({"user": "ictsohel"});
@@ -52,10 +53,27 @@ class Services {
           return throw Exception('Authentication Failed');
         }
       } else {
-        throw Exception('Failed to load user');
+        throw Exception(
+            'Failed to load userrr  $username $password ${response.body}');
       }
     } catch (e) {
-      throw Exception('Failed to load user from try');
+      throw Exception('Failed to load user try $e');
+      //   return  showDialog(
+      //   context: context,
+      //   builder: (BuildContext context) {
+      //     return AlertDialog(
+      //       title: Text(message),
+      //       actions: <Widget>[
+      //         FlatButton(
+      //           child: Text('Ok'),
+      //           onPressed: () {
+      //             Navigator.of(context).pop();
+      //           },
+      //         ),
+      //       ],
+      //     );
+      //   },
+      // );
     }
   }
 
