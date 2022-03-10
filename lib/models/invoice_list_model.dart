@@ -20,7 +20,7 @@ class InvoiceList {
     required this.expiration,
   });
 
-  String date;
+  DateTime date;
   String invnum;
   String service;
   String managername;
@@ -28,7 +28,7 @@ class InvoiceList {
   DateTime expiration;
 
   factory InvoiceList.fromJson(Map<String, dynamic> json) => InvoiceList(
-        date: json["date"],
+        date: DateTime.parse(json["date"]),
         invnum: json["invnum"],
         service: json["service"],
         managername: json["managername"],
@@ -37,7 +37,7 @@ class InvoiceList {
       );
 
   Map<String, dynamic> toJson() => {
-        "date": date,
+        "date": date.toIso8601String(),
         "invnum": invnum,
         "service": service,
         "managername": managername,

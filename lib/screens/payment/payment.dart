@@ -29,7 +29,8 @@ class _PaymentState extends State<Payment> {
       getId().then((username) {
         setState(() {
           username2 = username;
-          url = 'https://panel.aniknetwork.net/bkash/index.php?username=asdfa';
+          url =
+              'https://panel.aniknetwork.net/bkash/index.php?username=$username2';
         });
       });
     } catch (e) {
@@ -46,7 +47,8 @@ class _PaymentState extends State<Payment> {
     try {
       getId().then((username) {
         username2 = username;
-        url = 'https://panel.aniknetwork.net/bkash/index.php?username=asdfsaf';
+        url =
+            'https://panel.aniknetwork.net/bkash_android_apps/index.php?username=$username2';
       });
     } catch (e) {
       throw Exception("Failed to load user information");
@@ -93,7 +95,7 @@ class _PaymentState extends State<Payment> {
               ),
               body: WebView(
                   initialUrl:
-                      'https://panel.aniknetwork.net/bkash/index.php?username=$username2',
+                      'https://panel.aniknetwork.net/bkash_android_apps/index.php?username=$username2',
                   javascriptMode: JavascriptMode.unrestricted,
                   onWebViewCreated: (WebViewController webViewController) {})));
     }

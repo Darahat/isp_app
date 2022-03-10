@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:isp/models/invoice_list_model.dart';
 import 'package:isp/widgets/navigation_drawer_widget.dart';
 import 'package:isp/fetchData/Services.dart';
@@ -18,7 +19,6 @@ class _ListInvoiceState extends State<ListInvoice> {
   String _searchResult = '';
   Services services = Services();
 
-  var d;
   @override
   void initState() {
     super.initState();
@@ -153,17 +153,25 @@ class _ListInvoiceState extends State<ListInvoice> {
                                         invoiceFiltered.length,
                                         (index) => DataRow(cells: [
                                               DataCell(Text(
-                                                  '${invoiceFiltered[index].date}')),
+                                                  DateFormat('dd-MM-yyyy')
+                                                      .format(
+                                                          invoiceFiltered[index]
+                                                              .date))),
                                               DataCell(Text(
                                                   '${invoiceFiltered[index].invnum}')),
                                               DataCell(Text(
                                                   '${invoiceFiltered[index].service}')),
                                               DataCell(Text(
                                                   '${invoiceFiltered[index].managername}')),
+                                              DataCell(Text(double.parse(
+                                                      invoiceFiltered[index]
+                                                          .price)
+                                                  .toStringAsFixed(2))),
                                               DataCell(Text(
-                                                  '${invoiceFiltered[index].price}')),
-                                              DataCell(Text(
-                                                  '${invoiceFiltered[index].expiration}')),
+                                                  DateFormat('dd-MM-yyyy')
+                                                      .format(
+                                                          invoiceFiltered[index]
+                                                              .expiration))),
                                               DataCell(InkWell(
                                                   onTap: () {},
                                                   child: Container(

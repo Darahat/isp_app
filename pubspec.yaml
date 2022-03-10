@@ -45,6 +45,7 @@ dependencies:
   shared_preferences: ^2.0.13
   animated_text_kit: ^4.2.1
   webview_flutter: ^3.0.1
+  image_picker: ^0.8.4+10
 
 dev_dependencies:
   flutter_test:

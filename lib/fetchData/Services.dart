@@ -48,6 +48,7 @@ class Services {
 
         if (customers.username == username && apipass == digest2) {
           await prefs.setString('username', customers.username);
+          await prefs.setString('email', customers.email);
           return customers;
         } else {
           return throw Exception('Authentication Failed');
@@ -131,6 +132,23 @@ class Services {
       }
     } catch (e) {
       throw Exception('Failed to load user');
+    }
+  }
+
+  Future<bool> addImage(Map<String, String> body, String filepath) async {
+    String addimageUrl = 'https://api.aniknetwork.net/add_photo';
+    Map<String, String> headers = {
+      'Content-Type': 'multipart/form-data',
+    };
+    var request = http.MultipartRequest('POST', Uri.parse(addimageUrl))
+      ..fields.addAll(body)
+      ..headers.addAll(headers)
+      ..files.add(await http.MultipartFile.fromPath('image', filepath));
+    var response = await request.send();
+    if (response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
     }
   }
 }

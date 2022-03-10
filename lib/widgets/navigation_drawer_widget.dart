@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:isp/fetchData/Services.dart';
 import 'package:isp/models/user_model.dart';
 import 'package:isp/screens/dashboard/home.dart';
 import 'package:isp/screens/login/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:image_picker/image_picker.dart';
 
 class NavigationDrawerWidget extends StatefulWidget {
   const NavigationDrawerWidget({Key? key}) : super(key: key);
@@ -14,6 +17,42 @@ class NavigationDrawerWidget extends StatefulWidget {
 
 class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
   late Future<Customer> futureCustomer;
+  Services service = Services();
+  final _addFormKey = GlobalKey<FormState>();
+  final _titleController = TextEditingController();
+  late File _image;
+  final picker = ImagePicker();
+  getId() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? username = prefs.getString('username');
+    final String? email = prefs.getString('email');
+  }
+
+  Widget _buildImage() {
+    if (_image == null) {
+      return const Padding(
+        padding: EdgeInsets.fromLTRB(1, 1, 1, 1),
+        child: Icon(
+          Icons.add,
+          color: Colors.grey,
+        ),
+      );
+    } else {
+      return Text(_image.path);
+    }
+  }
+
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -23,9 +62,20 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
   final padding = const EdgeInsets.symmetric(horizontal: 20.0);
   @override
   Widget build(BuildContext context) {
+    String username2 = '';
+    String email = '';
+    // try {
+    //   getId().then((username, email) {
+    //     username2 = username;
+    //     email = email;
+    //   });
+    //   print(email);
+    // } catch (e) {
+    //   throw Exception("Failed to load user information");
+    // }
     return Drawer(
       child: Material(
-        color: const Color(0xffFFC09F),
+        color: Color.fromARGB(255, 252, 90, 2),
         child: ListView(padding: EdgeInsets.zero, children: <Widget>[
           FutureBuilder<Customer>(
             future: futureCustomer,

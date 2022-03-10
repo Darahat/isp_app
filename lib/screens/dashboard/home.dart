@@ -127,8 +127,11 @@ class _HomeState extends State<Home> {
                                                   (states) =>
                                                       const Color(0xffFFEE93),
                                                 )),
-                                            onPressed: () => {},
-                                            child: const Text('Upgrade'),
+                                            onPressed: () => {
+                                              Navigator.of(context)
+                                                  .pushNamed('/payment')
+                                            },
+                                            child: const Text('Pay Now'),
                                           )),
                                     ],
                                   )
